@@ -408,7 +408,6 @@ static bool encryptWithKeymasterKey(Keymaster& keymaster, const std::string& dir
             km::AuthorizationSetBuilder()
                     .Authorization(km::TAG_PURPOSE, km::KeyPurpose::ENCRYPT);
     auto opParamsWithRollback = opParams;
-    opParamsWithRollback.Authorization(km::TAG_ROLLBACK_RESISTANCE);
 
     km::AuthorizationSet outParams;
     auto opHandle = BeginKeymasterOp(keymaster, dir, keyParams, opParamsWithRollback, &outParams);
@@ -441,7 +440,6 @@ static bool decryptWithKeymasterKey(Keymaster& keymaster, const std::string& dir
                             .Authorization(km::TAG_NONCE, nonce)
                             .Authorization(km::TAG_PURPOSE, km::KeyPurpose::DECRYPT);
     auto opParamsWithRollback = opParams;
-    opParamsWithRollback.Authorization(km::TAG_ROLLBACK_RESISTANCE);
 
     auto opHandle = BeginKeymasterOp(keymaster, dir, keyParams, opParamsWithRollback, nullptr);
     if (!opHandle) opHandle = BeginKeymasterOp(keymaster, dir, keyParams, opParams, nullptr);
